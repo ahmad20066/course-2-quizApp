@@ -84,12 +84,19 @@ class _HomeScreenState extends State<HomeScreen> {
         {'answerText': 'popUntil', 'score': 1},
         {'answerText': 'push', 'score': 0}
       ]
-    },
+    }, //index = 7/length = 8
   ];
 
   int currentIndex = 0;
 
   int totalScore = 0;
+  void answerQuestion(int score) {
+    setState(() {
+      currentIndex++;
+    });
+    totalScore += score;
+    print("totalScore = $totalScore");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,23 +104,50 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("Quiz App"),
       ),
-      body: Column(
-        children: [
-          QuestionWidget(), //question
-          ...questions[currentIndex]['answers'].map((element) {
-            return AnswerWidget();
-          }).toList(), //answers
-          TextButton(
-              onPressed: () {
-                setState(() {
-                  currentIndex++;
-                });
-
-                print(currentIndex);
-              },
-              child: Text("answer"))
-        ],
-      ),
+      body:
+          currentIndex < questions.length //currentIndex= 8,questions.length = 8
+              ? Column(
+                  children: [
+                    QuestionWidget(
+                      text: questions[currentIndex]['question'],
+                    ), //question
+                    ...questions[currentIndex]['answers'].map((element) {
+                      return AnswerWidget(
+                        text: element['answerText'],
+                        onTap: () {
+                          answerQuestion(element['score']);
+                        },
+                      );
+                    }).toList(), //answers
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Quiz finished!",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Your Total Score = $totalScore",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Reset the quiz",
+                            style: TextStyle(fontSize: 25),
+                          ))
+                    ],
+                  ),
+                ),
     );
   }
 }

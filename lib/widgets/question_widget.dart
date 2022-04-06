@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatelessWidget {
-  const QuestionWidget({Key? key}) : super(key: key);
-
+  final String text;
+  QuestionWidget({required this.text});
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+        padding: EdgeInsets.all(8),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 28),
+        ));
   }
 }
