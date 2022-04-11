@@ -140,7 +140,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 20,
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              currentIndex = 0;
+                              totalScore = 0;
+                            });
+                          },
                           child: Text(
                             "Reset the quiz",
                             style: TextStyle(fontSize: 25),
